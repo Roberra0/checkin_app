@@ -75,37 +75,37 @@
 }
 
 @theme inline {
-  /* Headspace-inspired color scheme */
-  --color-primary: #f27446;
-  --color-primary-foreground: #ffffff;
+  /* Dark and moody color scheme */
+  --color-primary: #7c3aed;
+  --color-primary-foreground: #f3f4f6;
   
-  --color-background: #fef9f5;
-  --color-foreground: #2d3748;
+  --color-background: #0a0a0f;
+  --color-foreground: #d1d5db;
   
-  --color-card: #ffffff;
-  --color-card-foreground: #2d3748;
+  --color-card: #16161d;
+  --color-card-foreground: #e5e7eb;
   
-  --color-popover: #ffffff;
-  --color-popover-foreground: #2d3748;
+  --color-popover: #1a1a24;
+  --color-popover-foreground: #e5e7eb;
   
-  --color-muted: #f7ede7;
-  --color-muted-foreground: #718096;
+  --color-muted: #27273a;
+  --color-muted-foreground: #9ca3af;
   
-  --color-accent: #ffd6c7;
-  --color-accent-foreground: #2d3748;
+  --color-accent: #3b2e58;
+  --color-accent-foreground: #e5e7eb;
   
-  --color-border: #f0d8cc;
-  --color-input: #f0d8cc;
-  --color-ring: #f27446;
+  --color-border: #2d2d40;
+  --color-input: #27273a;
+  --color-ring: #8b5cf6;
   
-  --color-destructive: #e53e3e;
-  --color-destructive-foreground: #ffffff;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #f9fafb;
   
-  --color-chart-1: #f27446;
-  --color-chart-2: #48bb78;
-  --color-chart-3: #4299e1;
-  --color-chart-4: #ed8936;
-  --color-chart-5: #9f7aea;
+  --color-chart-1: #8b5cf6;
+  --color-chart-2: #06b6d4;
+  --color-chart-3: #10b981;
+  --color-chart-4: #f59e0b;
+  --color-chart-5: #ec4899;
   
   --radius: 1rem;
   --font-sans: 'Geist', 'Geist Fallback';
