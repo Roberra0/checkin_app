@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
-import { Smile, Briefcase, Users, Heart } from 'lucide-react'
+import { Smile, Briefcase, Users, Heart, Loader2 } from 'lucide-react'
 
 type CheckinFormProps = {
   onSubmit: (data: {
@@ -12,7 +12,8 @@ type CheckinFormProps = {
     work: number
     family: number
     friends: number
-  }) => void
+  }) => Promise<void>
+  isLoading?: boolean
 }
 
 const lifeAreas = [
@@ -22,7 +23,7 @@ const lifeAreas = [
   { key: "friends", label: "Friends", icon: Users, color: "text-chart-4" },
 ] as const
 
-export function CheckinForm({ onSubmit }: CheckinFormProps) {
+export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
   const [values, setValues] = useState({
     personal: 3,
     work: 3,
@@ -30,9 +31,9 @@ export function CheckinForm({ onSubmit }: CheckinFormProps) {
     friends: 3,
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    onSubmit(values)
+    await onSubmit(values)
     setValues({ personal: 3, work: 3, family: 3, friends: 3 })
   }
 
@@ -67,8 +68,15 @@ export function CheckinForm({ onSubmit }: CheckinFormProps) {
         </div>
       ))}
 
-      <Button type="submit" size="lg" className="w-full text-lg">
-        Save Check-in
+      <Button type="submit" size="lg" className="w-full text-lg" disabled={isLoading}>
+        {isLoading ? (
+          <>
+            <Loader2 className="h-5 w-5 animate-spin" />
+            Saving...
+          </>
+        ) : (
+          "Save Check-in"
+        )}
       </Button>
     </form>
   )
