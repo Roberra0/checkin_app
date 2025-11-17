@@ -1,8 +1,2 @@
-{
-  "buildCommand": "cd frontend_checkin && npm run build",
-  "devCommand": "cd frontend_checkin && npm run dev",
-  "installCommand": "cd frontend_checkin && npm install",
-  "framework": "nextjs",
-  "outputDirectory": "frontend_checkin/.next"
-}
+{}
 
