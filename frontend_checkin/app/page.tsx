@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { CheckinForm } from "@/components/checkin-form"
 import { CheckinTable } from "@/components/checkin-table"
 import { CheckinChart } from "@/components/checkin-chart"
+import { Celebration } from "@/components/celebration"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -20,6 +21,8 @@ export type CheckinData = {
 export default function Home() {
   const [checkins, setCheckins] = useState<CheckinData[]>([])
   const [mounted, setMounted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [showCelebration, setShowCelebration] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -29,7 +32,12 @@ export default function Home() {
     }
   }, [])
 
-  const addCheckin = (data: Omit<CheckinData, "id" | "timestamp" | "average">) => {
+  const addCheckin = async (data: Omit<CheckinData, "id" | "timestamp" | "average">) => {
+    setIsLoading(true)
+    
+    // Simulate processing time for better UX
+    await new Promise(resolve => setTimeout(resolve, 800))
+    
     const average = (data.personal + data.work + data.family + data.friends) / 4
     const newCheckin: CheckinData = {
       id: crypto.randomUUID(),
@@ -41,6 +49,10 @@ export default function Home() {
     const updated = [...checkins, newCheckin]
     setCheckins(updated)
     localStorage.setItem("dailyCheckins", JSON.stringify(updated))
+    setIsLoading(false)
+    
+    // Trigger celebration
+    setShowCelebration(true)
   }
 
   const clearCheckins = () => {
@@ -50,9 +62,12 @@ export default function Home() {
 
   return (
     <main className="min-h-screen p-4 md:p-8">
+      {showCelebration && (
+        <Celebration onComplete={() => setShowCelebration(false)} />
+      )}
       <div className="mx-auto max-w-6xl space-y-8">
         {/* Header */}
-        <div className="text-center space-y-3">
+        <div className="text-center space-y-3 animate-fade-in-up [animation-delay:100ms]" style={{ animationFillMode: 'both' }}>
           <h1 className="text-4xl md:text-5xl font-bold text-balance">
             Daily Checkin
           </h1>
@@ -62,19 +77,19 @@ export default function Home() {
         </div>
 
         {/* Checkin Form */}
-        <Card className="border-2">
+        <Card className={`border-2 animate-fade-in-up [animation-delay:300ms] transition-all duration-300 ${isLoading ? 'ring-2 ring-primary/20 shadow-lg' : ''}`} style={{ animationFillMode: 'both' }}>
           <CardHeader>
             <CardTitle className="text-2xl">How balanced do you feel today?</CardTitle>
             <CardDescription>Rate each area from 1 (low) to 5 (high)</CardDescription>
           </CardHeader>
           <CardContent>
-            <CheckinForm onSubmit={addCheckin} />
+            <CheckinForm onSubmit={addCheckin} isLoading={isLoading} />
           </CardContent>
         </Card>
 
         {/* Data Visualization */}
         {mounted && checkins.length > 0 && (
-          <Tabs defaultValue="chart" className="w-full">
+          <Tabs key={checkins.length} defaultValue="chart" className="w-full animate-fade-in-up [animation-delay:100ms]" style={{ animationFillMode: 'both' }}>
             <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
               <TabsTrigger value="chart">Trends</TabsTrigger>
               <TabsTrigger value="table">History</TabsTrigger>
@@ -91,7 +106,7 @@ export default function Home() {
         )}
 
         {mounted && checkins.length === 0 && (
-          <Card className="border-dashed">
+          <Card className="border-dashed animate-fade-in-up [animation-delay:500ms]" style={{ animationFillMode: 'both' }}>
             <CardContent className="py-12 text-center">
               <p className="text-muted-foreground">
                 No check-ins yet. Complete your first check-in above to start tracking your well-being.
