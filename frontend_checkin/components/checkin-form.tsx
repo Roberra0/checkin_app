@@ -72,14 +72,14 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
             {/* Tick marks */}
             <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-0.5 pointer-events-none">
               {[1, 2, 3, 4, 5].map((tick) => (
-                <div key={tick} className="flex flex-col items-center">
-                  <div className={`w-0.5 h-3 rounded-full transition-colors ${
+                <div 
+                  key={tick} 
+                  className={`w-0.5 h-3 rounded-full transition-colors ${
                     Math.round(values[key]) === tick 
                       ? 'bg-primary' 
                       : 'bg-muted-foreground/30'
-                  }`} />
-                  <span className="text-xs text-muted-foreground mt-1 font-medium">{tick}</span>
-                </div>
+                  }`} 
+                />
               ))}
             </div>
           </div>
