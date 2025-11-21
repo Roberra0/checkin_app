@@ -5,6 +5,7 @@ import { CheckinForm } from "@/components/checkin-form"
 import { CheckinTable } from "@/components/checkin-table"
 import { CheckinChart } from "@/components/checkin-chart"
 import { Celebration } from "@/components/celebration"
+import { TrustedByFooter } from "@/components/trusted-by-footer"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -115,6 +116,8 @@ export default function Home() {
           </Card>
         )}
       </div>
+      
+      <TrustedByFooter />
     </main>
   )
 }
