@@ -33,7 +33,14 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await onSubmit(values)
+    // Round values before submitting
+    const roundedValues = {
+      personal: Math.round(values.personal),
+      work: Math.round(values.work),
+      family: Math.round(values.family),
+      friends: Math.round(values.friends),
+    }
+    await onSubmit(roundedValues)
     setValues({ personal: 3, work: 3, family: 3, friends: 3 })
   }
 
@@ -46,22 +53,37 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
             <Label htmlFor={key} className="text-base font-medium">
               {label}
             </Label>
-            <span className="ml-auto text-2xl font-bold text-primary">
-              {values[key]}
+            <span className="ml-auto text-2xl font-bold text-primary transition-all duration-200 scale-100 hover:scale-105">
+              {Math.round(values[key])}
             </span>
           </div>
-          <Slider
-            id={key}
-            min={1}
-            max={5}
-            step={1}
-            value={[values[key]]}
-            onValueChange={([value]) =>
-              setValues((prev) => ({ ...prev, [key]: value }))
-            }
-            className="cursor-pointer"
-          />
-          <div className="flex justify-between text-xs text-muted-foreground px-1">
+          <div className="relative">
+            <Slider
+              id={key}
+              min={1}
+              max={5}
+              step={0.01}
+              value={[values[key]]}
+              onValueChange={([value]) =>
+                setValues((prev) => ({ ...prev, [key]: value }))
+              }
+              className="cursor-pointer py-2"
+            />
+            {/* Tick marks */}
+            <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-0.5 pointer-events-none">
+              {[1, 2, 3, 4, 5].map((tick) => (
+                <div 
+                  key={tick} 
+                  className={`w-0.5 h-3 rounded-full transition-colors ${
+                    Math.round(values[key]) === tick 
+                      ? 'bg-primary' 
+                      : 'bg-muted-foreground/30'
+                  }`} 
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground px-1 mt-2">
             <span>Low</span>
             <span>High</span>
           </div>
