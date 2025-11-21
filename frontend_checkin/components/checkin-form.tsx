@@ -33,7 +33,14 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    await onSubmit(values)
+    // Round values before submitting
+    const roundedValues = {
+      personal: Math.round(values.personal),
+      work: Math.round(values.work),
+      family: Math.round(values.family),
+      friends: Math.round(values.friends),
+    }
+    await onSubmit(roundedValues)
     setValues({ personal: 3, work: 3, family: 3, friends: 3 })
   }
 
@@ -47,14 +54,14 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
               {label}
             </Label>
             <span className="ml-auto text-2xl font-bold text-primary transition-all duration-200 scale-100 hover:scale-105">
-              {values[key]}
+              {Math.round(values[key])}
             </span>
           </div>
           <Slider
             id={key}
             min={1}
             max={5}
-            step={1}
+            step={0.01}
             value={[values[key]]}
             onValueChange={([value]) =>
               setValues((prev) => ({ ...prev, [key]: value }))
