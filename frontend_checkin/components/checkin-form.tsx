@@ -46,7 +46,7 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
             <Label htmlFor={key} className="text-base font-medium">
               {label}
             </Label>
-            <span className="ml-auto text-2xl font-bold text-primary">
+            <span className="ml-auto text-2xl font-bold text-primary transition-all duration-200 scale-100 hover:scale-105">
               {values[key]}
             </span>
           </div>
@@ -59,7 +59,7 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
             onValueChange={([value]) =>
               setValues((prev) => ({ ...prev, [key]: value }))
             }
-            className="cursor-pointer"
+            className="cursor-pointer py-2"
           />
           <div className="flex justify-between text-xs text-muted-foreground px-1">
             <span>Low</span>
