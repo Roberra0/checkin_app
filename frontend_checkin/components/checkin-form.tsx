@@ -57,18 +57,33 @@ export function CheckinForm({ onSubmit, isLoading = false }: CheckinFormProps) {
               {Math.round(values[key])}
             </span>
           </div>
-          <Slider
-            id={key}
-            min={1}
-            max={5}
-            step={0.01}
-            value={[values[key]]}
-            onValueChange={([value]) =>
-              setValues((prev) => ({ ...prev, [key]: value }))
-            }
-            className="cursor-pointer py-2"
-          />
-          <div className="flex justify-between text-xs text-muted-foreground px-1">
+          <div className="relative">
+            <Slider
+              id={key}
+              min={1}
+              max={5}
+              step={0.01}
+              value={[values[key]]}
+              onValueChange={([value]) =>
+                setValues((prev) => ({ ...prev, [key]: value }))
+              }
+              className="cursor-pointer py-2"
+            />
+            {/* Tick marks */}
+            <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-0.5 pointer-events-none">
+              {[1, 2, 3, 4, 5].map((tick) => (
+                <div key={tick} className="flex flex-col items-center">
+                  <div className={`w-0.5 h-3 rounded-full transition-colors ${
+                    Math.round(values[key]) === tick 
+                      ? 'bg-primary' 
+                      : 'bg-muted-foreground/30'
+                  }`} />
+                  <span className="text-xs text-muted-foreground mt-1 font-medium">{tick}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground px-1 mt-2">
             <span>Low</span>
             <span>High</span>
           </div>
